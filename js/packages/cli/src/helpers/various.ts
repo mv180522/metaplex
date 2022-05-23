@@ -387,12 +387,18 @@ export const getPriceWithMantissa = async (
 };
 
 export function getCluster(name: string): string {
+  if (name === '') {
+    return DEFAULT_CLUSTER.url;
+  }
+
   for (const cluster of CLUSTERS) {
     if (cluster.name === name) {
       return cluster.url;
     }
   }
-  return DEFAULT_CLUSTER.url;
+
+  throw new Error(`Could not get cluster: ${name}`);
+  return null;
 }
 
 export function parseUses(useMethod: string, total: number): Uses | null {
